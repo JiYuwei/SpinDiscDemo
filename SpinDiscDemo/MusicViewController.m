@@ -206,6 +206,9 @@ static NSInteger musicIndex = 0;
 {
     if (anim == [_discView.layer animationForKey:JYAnimationTypeScaleMove]) {
         _consoleView.consoleBtnEnabled=NO;
+        if (_consoleView.playBtn.consoleType != ConsoleBtnTypePlay) {
+            _consoleView.playBtn.consoleType = ConsoleBtnTypePlay;
+        }
     }
 }
 
@@ -213,6 +216,9 @@ static NSInteger musicIndex = 0;
 {
     if (anim == [_discView.layer animationForKey:JYAnimationTypeScaleMove]) {
         _consoleView.consoleBtnEnabled=YES;
+        if (_consoleView.playBtn.consoleType != ConsoleBtnTypePause) {
+            _consoleView.playBtn.consoleType = ConsoleBtnTypePause;
+        }
         [self loadingImageAtIndex:musicIndex];
     }
 }
