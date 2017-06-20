@@ -9,7 +9,7 @@
 #import "MusicViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImageView+CornerRadius.h"
-#import "UIImage+ColorImage.h"
+#import "UIImage+ImageEffects.h"
 #import "TitleView.h"
 #import "DiscView.h"
 #import "ConsoleView.h"
@@ -55,7 +55,11 @@ static NSInteger musicIndex = 0;
     NSDictionary *titleDic = _dataArray[0][@"titleDic"];
     
     _titleView.titleDict = titleDic;
-    [_baseImgView sd_setImageWithURL:[NSURL URLWithString:imgUrl]];
+    [_baseImgView sd_setImageWithURL:[NSURL URLWithString:imgUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (image) {
+            _baseImgView.image = [image blurImage];
+        }
+    }];
     [self.discViewArray[0] disc_setImageWithUrl:[NSURL URLWithString:imgUrl]];
 }
 
@@ -113,9 +117,9 @@ static NSInteger musicIndex = 0;
     
 //不合适但有效的方案
     
-    UIToolbar *toolBar=[[UIToolbar alloc] initWithFrame:_baseImgView.bounds];
-    toolBar.barStyle=UIBarStyleBlack;
-    [_baseImgView addSubview:toolBar];
+//    UIToolbar *toolBar=[[UIToolbar alloc] initWithFrame:_baseImgView.bounds];
+//    toolBar.barStyle=UIBarStyleBlack;
+//    [_baseImgView addSubview:toolBar];
     
     
 //    UIVisualEffectView *blurView=[[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
@@ -229,11 +233,22 @@ static NSInteger musicIndex = 0;
 //加载下一首歌曲数据
 -(void)loadingNextImageAtIndex:(NSInteger)index
 {
-    NSString *imgUrl = _dataArray[index][@"url"];
     NSDictionary *titleDic = _dataArray[index][@"titleDic"];
-    
     _titleView.titleDict = titleDic;
-    [_baseImgView sd_setImageWithURL:[NSURL URLWithString:imgUrl]];
+    
+    NSString *imgUrl = _dataArray[index][@"url"];
+//使用上一张唱片背景图作为placeholder
+    UIImage *placeHolder = _baseImgView.image;
+    [_baseImgView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:placeHolder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (image) {
+            _baseImgView.image = [image blurImage];
+            CATransition *transition = [CATransition animation];
+            transition.type = kCATransitionFade;
+            transition.duration = 1.0f;
+            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            [_baseImgView.layer addAnimation:transition forKey:nil];
+        }
+    }];
     [self.discViewArray[1] disc_setImageWithUrl:[NSURL URLWithString:imgUrl]];
 }
 
@@ -272,8 +287,6 @@ static NSInteger musicIndex = 0;
         [self playMusic];
     }
 }
-
-
 
 
 

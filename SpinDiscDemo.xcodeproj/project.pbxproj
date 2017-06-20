@@ -14,10 +14,10 @@
 		094320D21EEC254600FE085E /* SpinDiscDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 094320D11EEC254600FE085E /* SpinDiscDemoUITests.m */; };
 		094320E71EEC2AAE00FE085E /* MusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 094320E61EEC2AAE00FE085E /* MusicViewController.m */; };
 		094320ED1EEC359500FE085E /* UIImageView+CornerRadius.m in Sources */ = {isa = PBXBuildFile; fileRef = 094320EC1EEC359500FE085E /* UIImageView+CornerRadius.m */; };
-		094320F01EEC371700FE085E /* UIImage+ColorImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 094320EF1EEC371700FE085E /* UIImage+ColorImage.m */; };
 		094320F31EEC40BE00FE085E /* DiscView.m in Sources */ = {isa = PBXBuildFile; fileRef = 094320F21EEC40BE00FE085E /* DiscView.m */; };
 		094320F71EED3AD300FE085E /* ConsoleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 094320F61EED3AD300FE085E /* ConsoleView.m */; };
 		094320FA1EED3B4F00FE085E /* ConsoleBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 094320F91EED3B4F00FE085E /* ConsoleBtn.m */; };
+		09C718FB1EF8EE12008F9209 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C718FA1EF8EE12008F9209 /* UIImage+ImageEffects.m */; };
 		09EEB17D1EF8B7C0007B3FAF /* TitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09EEB17C1EF8B7C0007B3FAF /* TitleView.m */; };
 		09F554551EEEE332005002EF /* JYAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F554541EEEE332005002EF /* JYAnimationManager.m */; };
 		5FF8127D29D8CCBE05BB737B /* libPods-SpinDiscDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F22D0917C2BD43D1F3D77A /* libPods-SpinDiscDemo.a */; };
@@ -57,14 +57,14 @@
 		094320E61EEC2AAE00FE085E /* MusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicViewController.m; sourceTree = "<group>"; };
 		094320EB1EEC359500FE085E /* UIImageView+CornerRadius.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+CornerRadius.h"; sourceTree = "<group>"; };
 		094320EC1EEC359500FE085E /* UIImageView+CornerRadius.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+CornerRadius.m"; sourceTree = "<group>"; };
-		094320EE1EEC371700FE085E /* UIImage+ColorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColorImage.h"; sourceTree = "<group>"; };
-		094320EF1EEC371700FE085E /* UIImage+ColorImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ColorImage.m"; sourceTree = "<group>"; };
 		094320F11EEC40BE00FE085E /* DiscView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscView.h; sourceTree = "<group>"; };
 		094320F21EEC40BE00FE085E /* DiscView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscView.m; sourceTree = "<group>"; };
 		094320F51EED3AD300FE085E /* ConsoleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleView.h; sourceTree = "<group>"; };
 		094320F61EED3AD300FE085E /* ConsoleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleView.m; sourceTree = "<group>"; };
 		094320F81EED3B4F00FE085E /* ConsoleBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleBtn.h; sourceTree = "<group>"; };
 		094320F91EED3B4F00FE085E /* ConsoleBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleBtn.m; sourceTree = "<group>"; };
+		09C718F91EF8EE12008F9209 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		09C718FA1EF8EE12008F9209 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		09EEB17B1EF8B7C0007B3FAF /* TitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleView.h; sourceTree = "<group>"; };
 		09EEB17C1EF8B7C0007B3FAF /* TitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleView.m; sourceTree = "<group>"; };
 		09F554531EEEE332005002EF /* JYAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JYAnimationManager.h; path = JYAnimationManager/JYAnimationManager.h; sourceTree = "<group>"; };
@@ -168,10 +168,7 @@
 		094320F41EEC43CC00FE085E /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				094320EB1EEC359500FE085E /* UIImageView+CornerRadius.h */,
-				094320EC1EEC359500FE085E /* UIImageView+CornerRadius.m */,
-				094320EE1EEC371700FE085E /* UIImage+ColorImage.h */,
-				094320EF1EEC371700FE085E /* UIImage+ColorImage.m */,
+				09C718FC1EF8EF88008F9209 /* 3rdSupport */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -189,6 +186,17 @@
 				094320F91EED3B4F00FE085E /* ConsoleBtn.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		09C718FC1EF8EF88008F9209 /* 3rdSupport */ = {
+			isa = PBXGroup;
+			children = (
+				094320EB1EEC359500FE085E /* UIImageView+CornerRadius.h */,
+				094320EC1EEC359500FE085E /* UIImageView+CornerRadius.m */,
+				09C718F91EF8EE12008F9209 /* UIImage+ImageEffects.h */,
+				09C718FA1EF8EE12008F9209 /* UIImage+ImageEffects.m */,
+			);
+			name = 3rdSupport;
 			sourceTree = "<group>";
 		};
 		09F554521EEEE2F9005002EF /* JYAnimationManager */ = {
@@ -402,10 +410,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				094320F01EEC371700FE085E /* UIImage+ColorImage.m in Sources */,
 				094320F71EED3AD300FE085E /* ConsoleView.m in Sources */,
 				094320E71EEC2AAE00FE085E /* MusicViewController.m in Sources */,
 				09F554551EEEE332005002EF /* JYAnimationManager.m in Sources */,
+				09C718FB1EF8EE12008F9209 /* UIImage+ImageEffects.m in Sources */,
 				094320ED1EEC359500FE085E /* UIImageView+CornerRadius.m in Sources */,
 				094320B11EEC254600FE085E /* AppDelegate.m in Sources */,
 				094320AE1EEC254600FE085E /* main.m in Sources */,

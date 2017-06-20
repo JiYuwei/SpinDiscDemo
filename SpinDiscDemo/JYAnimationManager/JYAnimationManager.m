@@ -123,27 +123,17 @@ JYAnimationType const JYAnimationTypeFade      = @"animationFade";
     [view.layer addAnimation:group forKey:JYAnimationTypeScaleMove];
 }
 
+//显示唱片动画
 -(void)jy_addShowDiscAnimationWithView:(UIView *)view
 {
     CABasicAnimation *fadeAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     fadeAnimation.fromValue = [NSNumber numberWithFloat:0.0];
     fadeAnimation.toValue = [NSNumber numberWithFloat:1.0];
     fadeAnimation.duration = 0.8;
-//    fadeAnimation.removedOnCompletion = NO;
-//    fadeAnimation.fillMode = kCAFillModeForwards;
-//    fadeAnimation.delegate = self;
     
     [view.layer addAnimation:fadeAnimation forKey:JYAnimationTypeFade];
 }
 
-//-(void)jy_addChangeImgAnimationWithView:(UIView *)view
-//{
-//    CATransition *transition = [CATransition animation];
-//    transition.type = kCATransitionFade;
-//    transition.duration = 1.0f;
-//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-//    [view.layer addAnimation:transition forKey:JYAnimationTypeFade];
-//}
 
 //移除指定动画
 -(void)jy_removeAnimationFromView:(UIView *)view forKey:(NSString *)key
