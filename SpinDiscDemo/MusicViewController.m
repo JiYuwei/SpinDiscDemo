@@ -99,13 +99,13 @@ static NSInteger musicIndex = 0;
 //创建唱片视图
 -(void)createDiscView
 {
-    DiscView *discView1 = [[DiscView alloc] initWithFrame:CGRectMake(30, 150, SCREENWIDTH-60, SCREENWIDTH-60)];
+    DiscView *discView1 = [[DiscView alloc] initWithFrame:CGRectMake(20, 130, SCREENWIDTH-40, SCREENWIDTH-40)];
     [discView1 addObserver:self forKeyPath:@"switchRotate" options:NSKeyValueObservingOptionNew context:nil];
     discView1.delegate = self;
     
     [self.view addSubview:discView1];
     
-    DiscView *discView2 = [[DiscView alloc] initWithFrame:CGRectMake(30, 150, SCREENWIDTH-60, SCREENWIDTH-60)];
+    DiscView *discView2 = [[DiscView alloc] initWithFrame:CGRectMake(20, 130, SCREENWIDTH-40, SCREENWIDTH-40)];
     [discView2 addObserver:self forKeyPath:@"switchRotate" options:NSKeyValueObservingOptionNew context:nil];
     discView2.delegate = self;
     discView2.alpha = 0;
@@ -216,6 +216,9 @@ static NSInteger musicIndex = 0;
     if (_consoleView.playBtn.consoleType != ConsoleBtnTypePlay) {
         _consoleView.playBtn.consoleType = ConsoleBtnTypePlay;
     }
+    
+    _discViewArray[0].alpha = 0.0;
+    _discViewArray[1].alpha = 1.0;
 }
 
 -(void)changeDiscDidFinish
@@ -224,9 +227,6 @@ static NSInteger musicIndex = 0;
     if (_consoleView.playBtn.consoleType != ConsoleBtnTypePause) {
         _consoleView.playBtn.consoleType = ConsoleBtnTypePause;
     }
-    
-    _discViewArray[0].alpha = 0.0;
-    _discViewArray[1].alpha = 1.0;
     
     [_discViewArray exchangeObjectAtIndex:0 withObjectAtIndex:1];
     

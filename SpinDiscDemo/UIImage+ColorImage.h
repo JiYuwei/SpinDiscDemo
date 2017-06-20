@@ -13,6 +13,4 @@
 +(UIImage *)jy_imageWithColor:(UIColor *)color;
 -(UIImage *)jy_reSizeImage:(CGSize)reSize;
 
--(UIImage *)jy_boxblurImagewithNumber:(CGFloat)blur;
-
 @end

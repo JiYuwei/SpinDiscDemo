@@ -107,13 +107,14 @@ JYAnimationType const JYAnimationTypeFade      = @"animationFade";
     CABasicAnimation *fadeAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     fadeAnimation.fromValue = [NSNumber numberWithFloat:1.0];
     fadeAnimation.toValue = [NSNumber numberWithFloat:0.0];
-    fadeAnimation.duration = 0.6;
-    fadeAnimation.beginTime = 0.0;
+    fadeAnimation.duration = 0.8;
+    fadeAnimation.repeatCount = 1;
+    fadeAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     fadeAnimation.removedOnCompletion = NO;
     fadeAnimation.fillMode = kCAFillModeForwards;
     
     CAAnimationGroup *group = [CAAnimationGroup animation];
-    group.duration = 0.6;
+    group.duration = 0.8;
     group.animations=@[scaleAnimation,moveAnimation,fadeAnimation];
     group.removedOnCompletion = NO;
     group.fillMode = kCAFillModeForwards;
@@ -127,11 +128,10 @@ JYAnimationType const JYAnimationTypeFade      = @"animationFade";
     CABasicAnimation *fadeAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     fadeAnimation.fromValue = [NSNumber numberWithFloat:0.0];
     fadeAnimation.toValue = [NSNumber numberWithFloat:1.0];
-    fadeAnimation.duration = 0.6;
-    fadeAnimation.beginTime = 0.0;
+    fadeAnimation.duration = 0.8;
 //    fadeAnimation.removedOnCompletion = NO;
 //    fadeAnimation.fillMode = kCAFillModeForwards;
-    fadeAnimation.delegate = self;
+//    fadeAnimation.delegate = self;
     
     [view.layer addAnimation:fadeAnimation forKey:JYAnimationTypeFade];
 }
