@@ -150,7 +150,7 @@ static NSInteger musicIndex = 0;
     [discView2 addObserver:self forKeyPath:@"switchRotate" options:NSKeyValueObservingOptionNew context:nil];
     discView2.delegate = self;
     discView2.alpha = 0;
-    [self.view addSubview:discView2];
+    [self.view insertSubview:discView2 belowSubview:discView1];
     
     [self.discViewArray addObject:discView1];
     [self.discViewArray addObject:discView2];
@@ -282,6 +282,7 @@ static NSInteger musicIndex = 0;
         _consoleView.playBtn.consoleType = ConsoleBtnTypePause;
     }
     
+    [self.view bringSubviewToFront:_discViewArray[1]];
     [_discViewArray exchangeObjectAtIndex:0 withObjectAtIndex:1];
     
     if (!_discViewArray[0].switchRotate) {
