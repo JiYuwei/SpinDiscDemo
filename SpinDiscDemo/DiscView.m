@@ -39,15 +39,15 @@
 -(void)takeOutDiscAnim
 {
     if ([_imgDiscView.layer animationForKey:JYAnimationTypeRotaion]) {
-        [self.jyAManager jy_removeAnimationFromView:_imgDiscView forKey:JYAnimationTypeRotaion];
+        [self.jyAManager jy_removeAnimationFromLayer:_imgDiscView.layer forKey:JYAnimationTypeRotaion];
     }
 
-    [self.jyAManager jy_addAnimationWithView:self forKey:JYAnimationTypeScaleMove];
+    [self.jyAManager jy_addAnimationWithLayer:self.layer forKey:JYAnimationTypeScaleMove];
 }
 
 -(void)takeInDiscAnim
 {
-    [self.jyAManager jy_addAnimationWithView:self forKey:JYAnimationTypeFade];
+    [self.jyAManager jy_addAnimationWithLayer:self.layer forKey:JYAnimationTypeFade];
 }
 
 -(void)disc_setImageWithUrl:(NSURL *)url
@@ -94,14 +94,14 @@
 {
     if (_switchRotate) {
         if ([_imgDiscView.layer animationForKey:JYAnimationTypeRotaion]) {
-            [self.jyAManager jy_resumeRotateWithView:_imgDiscView];
+            [self.jyAManager jy_resumeRotateWithLayer:_imgDiscView.layer];
         }
         else{
-            [self.jyAManager jy_addAnimationWithView:_imgDiscView forKey:JYAnimationTypeRotaion];
+            [self.jyAManager jy_addAnimationWithLayer:_imgDiscView.layer forKey:JYAnimationTypeRotaion];
         }
     }
     else{
-        [self.jyAManager jy_pauseRotateWithView:_imgDiscView];
+        [self.jyAManager jy_pauseRotateWithLayer:_imgDiscView.layer];
     }
 }
 
@@ -132,7 +132,8 @@
 -(void)jy_animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     if (anim == [self.layer animationForKey:JYAnimationTypeScaleMove] && flag) {
-        [self.jyAManager jy_removeAnimationFromView:self forKey:JYAnimationTypeScaleMove];
+        [self.jyAManager jy_removeAnimationFromLayer:self.layer forKey:JYAnimationTypeScaleMove];
+        _imgDiscView.transform = CGAffineTransformIdentity;
         if ([_delegate respondsToSelector:@selector(changeDiscDidFinish)]) {
             [_delegate changeDiscDidFinish];
         }

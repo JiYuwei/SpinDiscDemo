@@ -29,12 +29,12 @@ FOUNDATION_EXPORT JYAnimationType const JYAnimationTypeFade;
 
 + (instancetype)manager;
 
-- (void)jy_addAnimationWithView:(UIView *)view forKey:(NSString *)key;
+- (void)jy_addAnimationWithLayer:(CALayer *)layer forKey:(NSString *)key;
 
-- (void)jy_pauseRotateWithView:(UIView *)view;
-- (void)jy_resumeRotateWithView:(UIView *)view;
+- (void)jy_pauseRotateWithLayer:(CALayer *)layer;
+- (void)jy_resumeRotateWithLayer:(CALayer *)layer;
 
-- (void)jy_removeAnimationFromView:(UIView *)view forKey:(NSString *)key;
-- (void)jy_removeAllAnimationFromView:(UIView *)view;
+- (void)jy_removeAnimationFromLayer:(CALayer *)layer forKey:(NSString *)key;
+- (void)jy_removeAllAnimationFromLayer:(CALayer *)layer;
 
 @end
