@@ -46,21 +46,6 @@ JYAnimationType const JYAnimationTypeFade      = @"animationFade";
     }
 }
 
-
-//创建旋转动画
-- (void)jy_addRotateAnimationWithView:(UIView *)view
-{
-    CABasicAnimation* rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI * 2.0];
-    rotationAnimation.duration = 30;
-    rotationAnimation.cumulative = YES;
-    rotationAnimation.repeatCount = HUGE_VALF;
-    rotationAnimation.delegate = self;
-    
-    [view.layer addAnimation:rotationAnimation forKey:JYAnimationTypeRotaion];
-    view.layer.speed = 1;
-}
-
 //暂停动画
 - (void)jy_pauseRotateWithView:(UIView *)view
 {
@@ -83,6 +68,35 @@ JYAnimationType const JYAnimationTypeFade      = @"animationFade";
     CFTimeInterval timePause = timeSincePause - pausedTime; //计算从哪里开始恢复动画
     view.layer.beginTime = timePause; //让层的动画从停止的位置恢复动效
 }
+
+//移除指定动画
+-(void)jy_removeAnimationFromView:(UIView *)view forKey:(NSString *)key
+{
+    [view.layer removeAnimationForKey:key];
+}
+
+//移除所有动画
+-(void)jy_removeAllAnimationFromView:(UIView *)view
+{
+    [view.layer removeAllAnimations];
+}
+
+#pragma mark - Private
+//创建旋转动画
+- (void)jy_addRotateAnimationWithView:(UIView *)view
+{
+    CABasicAnimation* rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI * 2.0];
+    rotationAnimation.duration = 30;
+    rotationAnimation.cumulative = YES;
+    rotationAnimation.repeatCount = HUGE_VALF;
+    rotationAnimation.delegate = self;
+    
+    [view.layer addAnimation:rotationAnimation forKey:JYAnimationTypeRotaion];
+    view.layer.speed = 1;
+}
+
+
 
 //切换唱片动画
 - (void)jy_addChangeMusicAnimationWithView:(UIView *)view
@@ -134,18 +148,6 @@ JYAnimationType const JYAnimationTypeFade      = @"animationFade";
     [view.layer addAnimation:fadeAnimation forKey:JYAnimationTypeFade];
 }
 
-
-//移除指定动画
--(void)jy_removeAnimationFromView:(UIView *)view forKey:(NSString *)key
-{
-    [view.layer removeAnimationForKey:key];
-}
-
-//移除所有动画
--(void)jy_removeAllAnimationFromView:(UIView *)view
-{
-    [view.layer removeAllAnimations];
-}
 
 #pragma mark - CAAnimationDelegate
 
