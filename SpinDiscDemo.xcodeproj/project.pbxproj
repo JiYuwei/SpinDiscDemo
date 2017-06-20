@@ -18,6 +18,7 @@
 		094320F31EEC40BE00FE085E /* DiscView.m in Sources */ = {isa = PBXBuildFile; fileRef = 094320F21EEC40BE00FE085E /* DiscView.m */; };
 		094320F71EED3AD300FE085E /* ConsoleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 094320F61EED3AD300FE085E /* ConsoleView.m */; };
 		094320FA1EED3B4F00FE085E /* ConsoleBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 094320F91EED3B4F00FE085E /* ConsoleBtn.m */; };
+		09EEB17D1EF8B7C0007B3FAF /* TitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09EEB17C1EF8B7C0007B3FAF /* TitleView.m */; };
 		09F554551EEEE332005002EF /* JYAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F554541EEEE332005002EF /* JYAnimationManager.m */; };
 		5FF8127D29D8CCBE05BB737B /* libPods-SpinDiscDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F22D0917C2BD43D1F3D77A /* libPods-SpinDiscDemo.a */; };
 /* End PBXBuildFile section */
@@ -64,6 +65,8 @@
 		094320F61EED3AD300FE085E /* ConsoleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleView.m; sourceTree = "<group>"; };
 		094320F81EED3B4F00FE085E /* ConsoleBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleBtn.h; sourceTree = "<group>"; };
 		094320F91EED3B4F00FE085E /* ConsoleBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsoleBtn.m; sourceTree = "<group>"; };
+		09EEB17B1EF8B7C0007B3FAF /* TitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleView.h; sourceTree = "<group>"; };
+		09EEB17C1EF8B7C0007B3FAF /* TitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleView.m; sourceTree = "<group>"; };
 		09F554531EEEE332005002EF /* JYAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JYAnimationManager.h; path = JYAnimationManager/JYAnimationManager.h; sourceTree = "<group>"; };
 		09F554541EEEE332005002EF /* JYAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JYAnimationManager.m; path = JYAnimationManager/JYAnimationManager.m; sourceTree = "<group>"; };
 		5A6583DD222FBB979A055B14 /* Pods-SpinDiscDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SpinDiscDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-SpinDiscDemo/Pods-SpinDiscDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -176,6 +179,8 @@
 		094320FB1EED5C0800FE085E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				09EEB17B1EF8B7C0007B3FAF /* TitleView.h */,
+				09EEB17C1EF8B7C0007B3FAF /* TitleView.m */,
 				094320F11EEC40BE00FE085E /* DiscView.h */,
 				094320F21EEC40BE00FE085E /* DiscView.m */,
 				094320F51EED3AD300FE085E /* ConsoleView.h */,
@@ -404,6 +409,7 @@
 				094320ED1EEC359500FE085E /* UIImageView+CornerRadius.m in Sources */,
 				094320B11EEC254600FE085E /* AppDelegate.m in Sources */,
 				094320AE1EEC254600FE085E /* main.m in Sources */,
+				09EEB17D1EF8B7C0007B3FAF /* TitleView.m in Sources */,
 				094320FA1EED3B4F00FE085E /* ConsoleBtn.m in Sources */,
 				094320F31EEC40BE00FE085E /* DiscView.m in Sources */,
 			);

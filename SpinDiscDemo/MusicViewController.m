@@ -10,6 +10,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImageView+CornerRadius.h"
 #import "UIImage+ColorImage.h"
+#import "TitleView.h"
 #import "DiscView.h"
 #import "ConsoleView.h"
 
@@ -21,6 +22,7 @@ static NSInteger musicIndex = 0;
 @interface MusicViewController () <DiscViewDelegate>
 
 @property(nonatomic,strong)UIImageView *baseImgView;
+@property(nonatomic,strong)TitleView *titleView;
 @property(nonatomic,strong)NSMutableArray <DiscView *> *discViewArray;
 @property(nonatomic,strong)ConsoleView *consoleView;
 
@@ -49,30 +51,55 @@ static NSInteger musicIndex = 0;
     [self prepareData];
     [self createUI];
     
-    NSString *imgUrl=_dataArray[0];
+    NSString *imgUrl = _dataArray[0][@"url"];
+    NSDictionary *titleDic = _dataArray[0][@"titleDic"];
+    
+    _titleView.titleDict = titleDic;
     [_baseImgView sd_setImageWithURL:[NSURL URLWithString:imgUrl]];
     [self.discViewArray[0] disc_setImageWithUrl:[NSURL URLWithString:imgUrl]];
 }
 
+//准备测试用数据
 -(void)prepareData
 {
     _dataArray=[NSMutableArray arrayWithObjects:
-                @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497113221174&di=41a218890b3758c6bb13bdd22193d55f&imgtype=0&src=http%3A%2F%2Fps4.tgbus.com%2FUploadFiles%2F201609%2F20160923163211619.jpg",
-                @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837902&di=6e5051443280a42b0fd648af21e9e2ed&imgtype=0&src=http%3A%2F%2Ff8.topit.me%2F8%2F50%2F48%2F11670736748fb48508l.jpg",
-                @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837902&di=e6f1b9c5910bbf82a213cf148cec7370&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fbaike%2Fpic%2Fitem%2F9113862234eee8b8d6cae209.jpg",
-                @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837902&di=1890c8849503480e0fdd67d16046a85a&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201306%2F09%2F20130609223125_JJRBr.jpeg",
-                @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837902&di=16786e6db88db21919c8e2bf4121ee9d&imgtype=0&src=http%3A%2F%2Fa4.att.hudong.com%2F55%2F92%2F01300542281695138572924404362.jpg",
-                @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837901&di=80605ef778ad73bcbcd44eb448e08481&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fblog%2F201401%2F04%2F20140104203604_BGBPa.thumb.600_0.png",
-                @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837901&di=b74a96027040f000c62c3550bda54f39&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fbaike%2Fpic%2Fitem%2F42a98226cffc1e1736f0fc9d4a90f603728de9cb.jpg",
-                @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837901&di=35659d06922f66cb3e5e5bf7d748c721&imgtype=0&src=http%3A%2F%2Ffile01.16sucai.com%2Fd%2Ffile%2F2014%2F0105%2Fc9c75688beea99a5d671ceeb27428efa.jpg",
-                @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837901&di=b029be8751565687b322c10d92a8cf3f&imgtype=0&src=http%3A%2F%2Fa4.topitme.com%2Fl%2F201101%2F14%2F12949466828066.jpg",
-                @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837901&di=cd52d5bd51a54e1622af1a560a956896&imgtype=0&src=http%3A%2F%2Fwww.fevte.com%2Fdata%2Fattachment%2Fportal%2F201204%2F09%2F3300201204091559165.jpg",
+                @{@"url":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497113221174&di=41a218890b3758c6bb13bdd22193d55f&imgtype=0&src=http%3A%2F%2Fps4.tgbus.com%2FUploadFiles%2F201609%2F20160923163211619.jpg",
+                  @"titleDic":@{@"title":@"Life Will Change",@"artist":@"目黑将司"}
+                  },
+                @{@"url":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837902&di=6e5051443280a42b0fd648af21e9e2ed&imgtype=0&src=http%3A%2F%2Ff8.topit.me%2F8%2F50%2F48%2F11670736748fb48508l.jpg",
+                  @"titleDic":@{@"title":@"Rude Boy",@"artist":@"Rihanna"}
+                  },
+                @{@"url":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837902&di=e6f1b9c5910bbf82a213cf148cec7370&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fbaike%2Fpic%2Fitem%2F9113862234eee8b8d6cae209.jpg",
+                  @"titleDic":@{@"title":@"Strict Machine",@"artist":@"Gold frapp"}
+                  },
+                @{@"url":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837902&di=1890c8849503480e0fdd67d16046a85a&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201306%2F09%2F20130609223125_JJRBr.jpeg",
+                  @"titleDic":@{@"title":@"The Mass",@"artist":@"Era"}
+                  },
+                @{@"url":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837902&di=16786e6db88db21919c8e2bf4121ee9d&imgtype=0&src=http%3A%2F%2Fa4.att.hudong.com%2F55%2F92%2F01300542281695138572924404362.jpg",
+                  @"titleDic":@{@"title":@"2012后",@"artist":@"Blade Mark"}
+                  },
+                @{@"url":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837901&di=80605ef778ad73bcbcd44eb448e08481&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fblog%2F201401%2F04%2F20140104203604_BGBPa.thumb.600_0.png",
+                  @"titleDic":@{@"title":@"We Were Dreaming",@"artist":@"M83."}
+                  },
+                @{@"url":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837901&di=b74a96027040f000c62c3550bda54f39&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fbaike%2Fpic%2Fitem%2F42a98226cffc1e1736f0fc9d4a90f603728de9cb.jpg",
+                  @"titleDic":@{@"title":@"青い栞",@"artist":@"Galileo Galilei"}
+                  },
+                @{@"url":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837901&di=35659d06922f66cb3e5e5bf7d748c721&imgtype=0&src=http%3A%2F%2Ffile01.16sucai.com%2Fd%2Ffile%2F2014%2F0105%2Fc9c75688beea99a5d671ceeb27428efa.jpg",
+                  @"titleDic":@{@"title":@"Good Save",@"artist":@"The Clientele"}
+                  },
+                @{@"url":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837901&di=b029be8751565687b322c10d92a8cf3f&imgtype=0&src=http%3A%2F%2Fa4.topitme.com%2Fl%2F201101%2F14%2F12949466828066.jpg",
+                  @"titleDic":@{@"title":@"Picture At An Exhibition",@"artist":@"Rebird Uite"}
+                  },
+                @{@"url":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497199837901&di=cd52d5bd51a54e1622af1a560a956896&imgtype=0&src=http%3A%2F%2Fwww.fevte.com%2Fdata%2Fattachment%2Fportal%2F201204%2F09%2F3300201204091559165.jpg",
+                  @"titleDic":@{@"title":@"EXIT",@"artist":@"REVALCY"}
+                  },
                 nil];
 }
 
 -(void)createUI
 {
     [self createMaskView];
+    [self createTitleView];
     [self createDiscView];
     [self createBtns];
 }
@@ -96,16 +123,25 @@ static NSInteger musicIndex = 0;
 //    [_baseImgView addSubview:blurView];
 }
 
+//创建标题视图
+-(void)createTitleView
+{
+    _titleView = [[TitleView alloc] initWithFrame:CGRectMake(40, 40, SCREENWIDTH-80, 70)];
+//    _titleView.backgroundColor=[UIColor redColor];
+    
+    [self.view addSubview:_titleView];
+}
+
 //创建唱片视图
 -(void)createDiscView
 {
-    DiscView *discView1 = [[DiscView alloc] initWithFrame:CGRectMake(20, 130, SCREENWIDTH-40, SCREENWIDTH-40)];
+    DiscView *discView1 = [[DiscView alloc] initWithFrame:CGRectMake(20, 140, SCREENWIDTH-40, SCREENWIDTH-40)];
     [discView1 addObserver:self forKeyPath:@"switchRotate" options:NSKeyValueObservingOptionNew context:nil];
     discView1.delegate = self;
     
     [self.view addSubview:discView1];
     
-    DiscView *discView2 = [[DiscView alloc] initWithFrame:CGRectMake(20, 130, SCREENWIDTH-40, SCREENWIDTH-40)];
+    DiscView *discView2 = [[DiscView alloc] initWithFrame:CGRectMake(20, 140, SCREENWIDTH-40, SCREENWIDTH-40)];
     [discView2 addObserver:self forKeyPath:@"switchRotate" options:NSKeyValueObservingOptionNew context:nil];
     discView2.delegate = self;
     discView2.alpha = 0;
@@ -118,7 +154,7 @@ static NSInteger musicIndex = 0;
 
 -(void)createBtns
 {
-    _consoleView=[[ConsoleView alloc] initWithFrame:CGRectMake((SCREENWIDTH-220)/2, SCREENHEIGHT-150, 220, 80)];
+    _consoleView=[[ConsoleView alloc] initWithFrame:CGRectMake((SCREENWIDTH-220)/2, SCREENHEIGHT-140, 220, 80)];
     [_consoleView addTarget:self action:@selector(buttonClicked:)];
     [self.view addSubview:_consoleView];
 }
@@ -193,8 +229,10 @@ static NSInteger musicIndex = 0;
 //加载下一首歌曲数据
 -(void)loadingNextImageAtIndex:(NSInteger)index
 {
-    NSString *imgUrl = _dataArray[index];
+    NSString *imgUrl = _dataArray[index][@"url"];
+    NSDictionary *titleDic = _dataArray[index][@"titleDic"];
     
+    _titleView.titleDict = titleDic;
     [_baseImgView sd_setImageWithURL:[NSURL URLWithString:imgUrl]];
     [self.discViewArray[1] disc_setImageWithUrl:[NSURL URLWithString:imgUrl]];
 }
