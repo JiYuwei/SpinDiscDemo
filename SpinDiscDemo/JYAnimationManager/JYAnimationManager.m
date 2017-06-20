@@ -93,7 +93,7 @@ JYAnimationType const JYAnimationTypeFade      = @"animationFade";
     rotationAnimation.delegate = self;
     
     [view.layer addAnimation:rotationAnimation forKey:JYAnimationTypeRotaion];
-    view.layer.speed = 1;
+    view.layer.speed = 1.0;
 }
 
 
@@ -135,6 +135,7 @@ JYAnimationType const JYAnimationTypeFade      = @"animationFade";
     group.delegate = self;
     
     [view.layer addAnimation:group forKey:JYAnimationTypeScaleMove];
+    view.layer.speed = 1.0;
 }
 
 //显示唱片动画
@@ -146,6 +147,7 @@ JYAnimationType const JYAnimationTypeFade      = @"animationFade";
     fadeAnimation.duration = 0.8;
     
     [view.layer addAnimation:fadeAnimation forKey:JYAnimationTypeFade];
+    view.layer.speed = 1.0;
 }
 
 
