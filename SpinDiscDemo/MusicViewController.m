@@ -12,21 +12,17 @@
 #import "UIImage+ColorImage.h"
 #import "DiscView.h"
 #import "ConsoleView.h"
-#import "JYAnimationManager.h"
 
 #define SCREENWIDTH   [[UIScreen mainScreen] bounds].size.width
 #define SCREENHEIGHT  [[UIScreen mainScreen] bounds].size.height
 
 static NSInteger musicIndex = 0;
 
-@interface MusicViewController () <JYAnimationDelegate>
+@interface MusicViewController () <DiscViewDelegate>
 
 @property(nonatomic,strong)UIImageView *baseImgView;
-@property(nonatomic,strong)UIView *circleView;
-@property(nonatomic,strong)DiscView *discView;
+@property(nonatomic,strong)NSMutableArray <DiscView *> *discViewArray;
 @property(nonatomic,strong)ConsoleView *consoleView;
-
-@property(nonatomic,strong)JYAnimationManager *jyAManager;
 
 @property(nonatomic,strong)NSMutableArray *dataArray;
 
@@ -35,14 +31,13 @@ static NSInteger musicIndex = 0;
 @implementation MusicViewController
 
 //Lazyload
--(JYAnimationManager *)jyAManager
+- (NSMutableArray *)discViewArray
 {
-    if (!_jyAManager) {
-        _jyAManager=[JYAnimationManager manager];
-        _jyAManager.delegate=self;
+    if (!_discViewArray) {
+        _discViewArray = [NSMutableArray array];
     }
     
-    return _jyAManager;
+    return _discViewArray;
 }
 
 
@@ -53,7 +48,10 @@ static NSInteger musicIndex = 0;
     
     [self prepareData];
     [self createUI];
-    [self loadingImageAtIndex:0];
+    
+    NSString *imgUrl=_dataArray[0];
+    [_baseImgView sd_setImageWithURL:[NSURL URLWithString:imgUrl]];
+    [self.discViewArray[0] disc_setImageWithUrl:[NSURL URLWithString:imgUrl]];
 }
 
 -(void)prepareData
@@ -101,17 +99,20 @@ static NSInteger musicIndex = 0;
 //创建唱片视图
 -(void)createDiscView
 {
-    _circleView=[[UIView alloc] initWithFrame:CGRectMake(30, 150, SCREENWIDTH-60, SCREENWIDTH-60)];
-    _circleView.backgroundColor=[UIColor blackColor];
-    _circleView.layer.cornerRadius=_circleView.bounds.size.width/2;
-    _circleView.alpha=0.2f;
-    [self.view addSubview:_circleView];
+    DiscView *discView1 = [[DiscView alloc] initWithFrame:CGRectMake(30, 150, SCREENWIDTH-60, SCREENWIDTH-60)];
+    [discView1 addObserver:self forKeyPath:@"switchRotate" options:NSKeyValueObservingOptionNew context:nil];
+    discView1.delegate = self;
     
-    _discView=[[DiscView alloc] initWithFrame:CGRectMake(_circleView.frame.origin.x+8, _circleView.frame.origin.y+8, _circleView.frame.size.width-16, _circleView.frame.size.height-16)];
-    _discView.backgroundColor=[UIColor clearColor];
-    [_discView zy_cornerRadiusRoundingRect];
-    [_discView addObserver:self forKeyPath:@"switchRotate" options:NSKeyValueObservingOptionNew context:nil];
-    [self.view addSubview:_discView];
+    [self.view addSubview:discView1];
+    
+    DiscView *discView2 = [[DiscView alloc] initWithFrame:CGRectMake(30, 150, SCREENWIDTH-60, SCREENWIDTH-60)];
+    [discView2 addObserver:self forKeyPath:@"switchRotate" options:NSKeyValueObservingOptionNew context:nil];
+    discView2.delegate = self;
+    discView2.alpha = 0;
+    [self.view addSubview:discView2];
+    
+    [self.discViewArray addObject:discView1];
+    [self.discViewArray addObject:discView2];
 }
 
 
@@ -120,18 +121,6 @@ static NSInteger musicIndex = 0;
     _consoleView=[[ConsoleView alloc] initWithFrame:CGRectMake((SCREENWIDTH-220)/2, SCREENHEIGHT-150, 220, 80)];
     [_consoleView addTarget:self action:@selector(buttonClicked:)];
     [self.view addSubview:_consoleView];
-}
-
--(void)loadingImageAtIndex:(NSInteger)index
-{
-    NSString *imgUrl=_dataArray[index];
-
-    [_baseImgView sd_setImageWithURL:[NSURL URLWithString:imgUrl]];
-    
-    [_discView sd_setImageWithURL:[NSURL URLWithString:imgUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        [self.jyAManager jy_removeAnimationFromView:_discView forKey:JYAnimationTypeScaleMove];
-        [self.jyAManager jy_removeAnimationFromView:_circleView forKey:JYAnimationTypeScaleMove];
-    }];
 }
 
 
@@ -159,39 +148,58 @@ static NSInteger musicIndex = 0;
 
 -(void)playMusic
 {
-    _discView.switchRotate=!_discView.switchRotate;
+    _discViewArray[0].switchRotate=!_discViewArray[0].switchRotate;
 }
 
 -(void)loadingLastMusic
 {
-    musicIndex--;
-    if (musicIndex<0) {
-        musicIndex=_dataArray.count-1;
-    }
+    musicIndex = [self minusIndex:musicIndex];
     
     [self changeMusic];
 }
 
 -(void)loadingNextMusic
 {
-    musicIndex++;
-    if (musicIndex>=_dataArray.count) {
-        musicIndex=0;
-    }
+    musicIndex = [self plusIndex:musicIndex];
     
     [self changeMusic];
 }
 
 -(void)changeMusic
 {
-    [self.jyAManager jy_addAnimationWithView:_discView forKey:JYAnimationTypeScaleMove];
-    [self.jyAManager jy_addAnimationWithView:_circleView forKey:JYAnimationTypeScaleMove];
-    if (!_discView.switchRotate) {
-        [self playMusic];
-    }
-    
+    [_discViewArray[0] takeOutDiscAnim];
+    [_discViewArray[1] takeInDiscAnim];
+    [self loadingNextImageAtIndex:musicIndex];
+//    [self exchangeDiscViewArrayItems];
 }
 
+//- (void)exchangeDiscViewArrayItems
+//{
+//    DiscView *discView1 = _discViewArray[0];
+//    DiscView *discView2 = _discViewArray[1];
+//    
+//    [UIView animateWithDuration:0.8 animations:^{
+//        discView1.alpha = 0;
+//        discView2.alpha = 1;
+//    } completion:^(BOOL finished) {
+//        [_discViewArray exchangeObjectAtIndex:0 withObjectAtIndex:1];
+//        
+//        if (!_discViewArray[0].switchRotate) {
+//            [self playMusic];
+//        }
+//    }];
+//}
+
+//加载下一首歌曲数据
+-(void)loadingNextImageAtIndex:(NSInteger)index
+{
+    NSString *imgUrl = _dataArray[index];
+    
+    [_baseImgView sd_setImageWithURL:[NSURL URLWithString:imgUrl]];
+    [self.discViewArray[1] disc_setImageWithUrl:[NSURL URLWithString:imgUrl]];
+}
+
+#pragma mark - KVO switchRotate
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"switchRotate"]) {
@@ -200,37 +208,62 @@ static NSInteger musicIndex = 0;
     }
 }
 
-#pragma mark - JYAnimationDelegate
+#pragma mark - DiscViewDelegate
 
--(void)jy_animationDidStart:(CAAnimation *)anim
+-(void)changeDiscDidStart
 {
-    if (anim == [_discView.layer animationForKey:JYAnimationTypeScaleMove]) {
-        _consoleView.consoleBtnEnabled=NO;
-        if (_consoleView.playBtn.consoleType != ConsoleBtnTypePlay) {
-            _consoleView.playBtn.consoleType = ConsoleBtnTypePlay;
-        }
+    _consoleView.consoleBtnEnabled=NO;
+    if (_consoleView.playBtn.consoleType != ConsoleBtnTypePlay) {
+        _consoleView.playBtn.consoleType = ConsoleBtnTypePlay;
     }
 }
 
--(void)jy_animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+-(void)changeDiscDidFinish
 {
-    if (anim == [_discView.layer animationForKey:JYAnimationTypeScaleMove]) {
-        _consoleView.consoleBtnEnabled=YES;
-        if (_consoleView.playBtn.consoleType != ConsoleBtnTypePause) {
-            _consoleView.playBtn.consoleType = ConsoleBtnTypePause;
-        }
-        [self loadingImageAtIndex:musicIndex];
+    _consoleView.consoleBtnEnabled=YES;
+    if (_consoleView.playBtn.consoleType != ConsoleBtnTypePause) {
+        _consoleView.playBtn.consoleType = ConsoleBtnTypePause;
+    }
+    
+    _discViewArray[0].alpha = 0.0;
+    _discViewArray[1].alpha = 1.0;
+    
+    [_discViewArray exchangeObjectAtIndex:0 withObjectAtIndex:1];
+    
+    if (!_discViewArray[0].switchRotate) {
+        [self playMusic];
     }
 }
 
--(void)dealloc
-{
-    [_jyAManager jy_removeAllAnimationFromView:_discView];
-}
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+
+- (NSInteger)plusIndex:(NSInteger)index
+{
+    index++;
+    if (index>=_dataArray.count) {
+        index=0;
+    }
+    
+    return index;
+}
+
+- (NSInteger)minusIndex:(NSInteger)index
+{
+    index--;
+    if (index<0) {
+        index=_dataArray.count-1;
+    }
+    
+    return index;
 }
 
 /*

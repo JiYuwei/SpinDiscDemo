@@ -39,7 +39,7 @@ JYAnimationType const JYAnimationTypeFade      = @"animationFade";
         [self jy_addChangeMusicAnimationWithView:view];
     }
     else if (key == JYAnimationTypeFade){
-        [self jy_addChangeImgAnimationWithView:view];
+        [self jy_addShowDiscAnimationWithView:view];
     }
     else{
         return;
@@ -58,7 +58,7 @@ JYAnimationType const JYAnimationTypeFade      = @"animationFade";
     rotationAnimation.delegate = self;
     
     [view.layer addAnimation:rotationAnimation forKey:JYAnimationTypeRotaion];
-    [self jy_pauseRotateWithView:view];
+    view.layer.speed = 1;
 }
 
 //暂停动画
@@ -104,26 +104,46 @@ JYAnimationType const JYAnimationTypeFade      = @"animationFade";
     moveAnimation.removedOnCompletion = NO;
     moveAnimation.fillMode = kCAFillModeForwards;
     
+    CABasicAnimation *fadeAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    fadeAnimation.fromValue = [NSNumber numberWithFloat:1.0];
+    fadeAnimation.toValue = [NSNumber numberWithFloat:0.0];
+    fadeAnimation.duration = 0.6;
+    fadeAnimation.beginTime = 0.0;
+    fadeAnimation.removedOnCompletion = NO;
+    fadeAnimation.fillMode = kCAFillModeForwards;
+    
     CAAnimationGroup *group = [CAAnimationGroup animation];
-    group.duration = 0.8;
-    group.animations=@[scaleAnimation,moveAnimation];
+    group.duration = 0.6;
+    group.animations=@[scaleAnimation,moveAnimation,fadeAnimation];
     group.removedOnCompletion = NO;
     group.fillMode = kCAFillModeForwards;
     group.delegate = self;
     
     [view.layer addAnimation:group forKey:JYAnimationTypeScaleMove];
-    view.layer.speed = 1.0;
 }
 
--(void)jy_addChangeImgAnimationWithView:(UIView *)view
+-(void)jy_addShowDiscAnimationWithView:(UIView *)view
 {
-    CATransition *transition = [CATransition animation];
-    transition.type = kCATransitionFade;
-    transition.duration = 1.0f;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    [view.layer addAnimation:transition forKey:JYAnimationTypeFade];
-    view.layer.speed = 1.0;
+    CABasicAnimation *fadeAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    fadeAnimation.fromValue = [NSNumber numberWithFloat:0.0];
+    fadeAnimation.toValue = [NSNumber numberWithFloat:1.0];
+    fadeAnimation.duration = 0.6;
+    fadeAnimation.beginTime = 0.0;
+//    fadeAnimation.removedOnCompletion = NO;
+//    fadeAnimation.fillMode = kCAFillModeForwards;
+    fadeAnimation.delegate = self;
+    
+    [view.layer addAnimation:fadeAnimation forKey:JYAnimationTypeFade];
 }
+
+//-(void)jy_addChangeImgAnimationWithView:(UIView *)view
+//{
+//    CATransition *transition = [CATransition animation];
+//    transition.type = kCATransitionFade;
+//    transition.duration = 1.0f;
+//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//    [view.layer addAnimation:transition forKey:JYAnimationTypeFade];
+//}
 
 //移除指定动画
 -(void)jy_removeAnimationFromView:(UIView *)view forKey:(NSString *)key

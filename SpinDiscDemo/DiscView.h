@@ -8,8 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DiscView : UIImageView
+@protocol DiscViewDelegate <NSObject>
 
-@property (nonatomic) BOOL switchRotate;  //播放暂停状态开关
+- (void)changeDiscDidStart;
+- (void)changeDiscDidFinish;
+
+@end
+
+
+@interface DiscView : UIView
+
+@property (nonatomic,assign) BOOL switchRotate;  //播放暂停状态开关
+@property (nonatomic,weak) id <DiscViewDelegate> delegate;
+
+- (void)takeOutDiscAnim;
+- (void)takeInDiscAnim;
+- (void)disc_setImageWithUrl:(NSURL *)url;
 
 @end
