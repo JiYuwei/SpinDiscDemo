@@ -78,6 +78,8 @@
     _imgDiscView=[[UIImageView alloc] initWithFrame:CGRectMake(8, 8, self.bounds.size.width-16, self.bounds.size.height-16)];
     _imgDiscView.backgroundColor=[UIColor clearColor];
     [_imgDiscView zy_cornerRadiusRoundingRect];
+//    _imgDiscView.layer.cornerRadius = _imgDiscView.bounds.size.width/2;
+//    _imgDiscView.layer.masksToBounds = YES;
     [self addSubview:_imgDiscView];
 }
 

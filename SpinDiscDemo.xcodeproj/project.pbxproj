@@ -168,7 +168,10 @@
 		094320F41EEC43CC00FE085E /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				09C718FC1EF8EF88008F9209 /* 3rdSupport */,
+				094320EB1EEC359500FE085E /* UIImageView+CornerRadius.h */,
+				094320EC1EEC359500FE085E /* UIImageView+CornerRadius.m */,
+				09C718F91EF8EE12008F9209 /* UIImage+ImageEffects.h */,
+				09C718FA1EF8EE12008F9209 /* UIImage+ImageEffects.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -186,17 +189,6 @@
 				094320F91EED3B4F00FE085E /* ConsoleBtn.m */,
 			);
 			name = Views;
-			sourceTree = "<group>";
-		};
-		09C718FC1EF8EF88008F9209 /* 3rdSupport */ = {
-			isa = PBXGroup;
-			children = (
-				094320EB1EEC359500FE085E /* UIImageView+CornerRadius.h */,
-				094320EC1EEC359500FE085E /* UIImageView+CornerRadius.m */,
-				09C718F91EF8EE12008F9209 /* UIImage+ImageEffects.h */,
-				09C718FA1EF8EE12008F9209 /* UIImage+ImageEffects.m */,
-			);
-			name = 3rdSupport;
 			sourceTree = "<group>";
 		};
 		09F554521EEEE2F9005002EF /* JYAnimationManager */ = {
