@@ -10,6 +10,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImageView+CornerRadius.h"
 #import "UIImage+ImageEffects.h"
+#import "UIImage+ImageOpacity.h"
 #import "TitleView.h"
 #import "DiscView.h"
 #import "ConsoleView.h"
@@ -57,7 +58,7 @@ static NSInteger musicIndex = 0;
     _titleView.titleDict = titleDic;
     [_baseImgView sd_setImageWithURL:[NSURL URLWithString:imgUrl] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (image) {
-            _baseImgView.image = [image blurImage];
+            _baseImgView.image = [[image blurImage] jy_lucidImage];
         }
     }];
     [self.discViewArray[0] disc_setImageWithUrl:[NSURL URLWithString:imgUrl]];
@@ -112,7 +113,7 @@ static NSInteger musicIndex = 0;
 -(void)createMaskView
 {
     _baseImgView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHEIGHT)];
-    _baseImgView.backgroundColor=[UIColor darkGrayColor];
+    _baseImgView.backgroundColor=[UIColor blackColor];
     [self.view addSubview:_baseImgView];
     
 //不合适但有效的方案
@@ -241,7 +242,7 @@ static NSInteger musicIndex = 0;
     UIImage *placeHolder = _baseImgView.image;
     [_baseImgView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:placeHolder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (image) {
-            _baseImgView.image = [image blurImage];
+            _baseImgView.image = [[image blurImage] jy_lucidImage];
             CATransition *transition = [CATransition animation];
             transition.type = kCATransitionFade;
             transition.duration = 1.0f;
