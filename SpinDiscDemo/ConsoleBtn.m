@@ -10,14 +10,17 @@
 
 #define BUTTON_COLOR   [UIColor colorWithRed:0.27 green:0.73 blue:0.36 alpha:1]
 #define DISABLE_COLOR  [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1]
-static CGFloat enableColor[4]  = {0.27,0.73,0.36,1.0};
-static CGFloat disableColor[4] = {0.5,0.5,0.5,1.0};
+//static CGFloat enableColor[4]  = {0.27,0.73,0.36,1.0};
+//static CGFloat disableColor[4] = {0.5,0.5,0.5,1.0};
+
+@interface ConsoleBtn ()
+
+@property(nonatomic,strong)UIColor *btnColor;
+
+@end
+
 
 @implementation ConsoleBtn
-{
-    CGFloat _zColor[4];
-}
-
 
 -(instancetype)initWithFrame:(CGRect)frame
 {
@@ -28,9 +31,10 @@ static CGFloat disableColor[4] = {0.5,0.5,0.5,1.0};
 {
     if (self=[super initWithFrame:frame]) {
         
-        for (int i=0; i<4; i++) {
-            _zColor[i]=enableColor[i];
-        }
+//        for (int i=0; i<4; i++) {
+//            _zColor[i]=enableColor[i];
+//        }
+        _btnColor = BUTTON_COLOR;
         
         self.consoleType=type;
         [self customBtnStyle];
@@ -66,9 +70,11 @@ static CGFloat disableColor[4] = {0.5,0.5,0.5,1.0};
 
 -(void)enabledBtnColor:(BOOL)enabled
 {
-    for (int i=0; i<4; i++) {
-        _zColor[i]=enabled?enableColor[i]:disableColor[i];
-    }
+//    for (int i=0; i<4; i++) {
+//        _zColor[i]=enabled?enableColor[i]:disableColor[i];
+//    }
+    _btnColor = enabled ? BUTTON_COLOR : DISABLE_COLOR;
+    
     self.layer.borderColor=enabled?BUTTON_COLOR.CGColor:DISABLE_COLOR.CGColor;
     [self setNeedsDisplay];
 }
@@ -80,8 +86,9 @@ static CGFloat disableColor[4] = {0.5,0.5,0.5,1.0};
     [super drawRect:rect];
     
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetStrokeColor(context, _zColor);
-    CGContextSetFillColor(context, _zColor);
+//    CGContextSetStrokeColor(context, _zColor);
+//    CGContextSetFillColor(context, _zColor);
+    [_btnColor set];
     CGContextSetLineWidth(context, 1.0);
     
     switch (_consoleType) {
