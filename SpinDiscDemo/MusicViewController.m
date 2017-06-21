@@ -170,6 +170,7 @@ static NSInteger musicIndex = 0;
     ConsoleBtn *btn=(ConsoleBtn *)sender;
     switch (btn.consoleType) {
         case ConsoleBtnTypePlay:
+        case ConsoleBtnTypePause:
             [self playMusic];
             break;
         case ConsoleBtnTypeLast:
@@ -178,9 +179,7 @@ static NSInteger musicIndex = 0;
         case ConsoleBtnTypeNext:
             [self loadingNextMusic];
             break;
-        case ConsoleBtnTypePause:
-            [self playMusic];
-            break;
+        
             
         default:
             break;

@@ -12,8 +12,6 @@ JYAnimationType const JYAnimationTypeRotaion   = @"animationRotation";
 JYAnimationType const JYAnimationTypeScaleMove = @"animationScaleMove";
 JYAnimationType const JYAnimationTypeFade      = @"animationFade";
 
-static CFTimeInterval firstBeginTime = 0;
-static CFTimeInterval totalPauseTime = 0;
 
 @implementation JYAnimationManager
 
@@ -61,8 +59,6 @@ static CFTimeInterval totalPauseTime = 0;
     CFTimeInterval timeSincePause = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
     CFTimeInterval timePause = timeSincePause - pausedTime; //计算从哪里开始恢复动画
     layer.beginTime = timePause; //让层的动画从停止的位置恢复动效
-    
-    totalPauseTime += timePause;
 }
 
 //移除指定动画
@@ -89,6 +85,7 @@ static CFTimeInterval totalPauseTime = 0;
 }
 
 #pragma mark - Private
+
 //创建旋转动画
 - (void)jy_addRotateAnimationWithLayer:(CALayer *)layer
 {
@@ -101,9 +98,6 @@ static CFTimeInterval totalPauseTime = 0;
 
     [layer addAnimation:rotationAnimation forKey:JYAnimationTypeRotaion];
     layer.speed = 1.0;
-    
-    totalPauseTime = 0;
-    firstBeginTime = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
 }
 
 
