@@ -38,11 +38,6 @@
 
 -(void)takeOutDiscAnim;
 {
-    if ([_imgDiscView.layer animationForKey:JYAnimationTypeRotaion] && _imgDiscView.layer.speed > 0) {
-//        [self.jyAManager jy_removeAnimationFromLayer:_imgDiscView.layer forKey:JYAnimationTypeRotaion];
-        [self.jyAManager jy_pauseAnimationWithLayer:_imgDiscView.layer];
-    }
-
     [self.jyAManager jy_addAnimationWithLayer:self.layer forKey:JYAnimationTypeScaleMove];
 }
 
@@ -122,7 +117,6 @@
 -(void)jy_animationDidStart:(CAAnimation *)anim
 {
     if (anim == [self.layer animationForKey:JYAnimationTypeScaleMove]) {
-        _switchRotate = NO;
         if ([_delegate respondsToSelector:@selector(changeDiscDidStart)]) {
             [_delegate changeDiscDidStart];
         }
@@ -135,7 +129,7 @@
     if (anim == [self.layer animationForKey:JYAnimationTypeScaleMove] && flag) {
         [self.jyAManager jy_removeAnimationFromLayer:_imgDiscView.layer forKey:JYAnimationTypeRotaion];
         [self.jyAManager jy_removeAnimationFromLayer:self.layer forKey:JYAnimationTypeScaleMove];
-        _imgDiscView.transform = CGAffineTransformIdentity;
+
         if ([_delegate respondsToSelector:@selector(changeDiscDidFinish)]) {
             [_delegate changeDiscDidFinish];
         }
@@ -146,7 +140,6 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CheckPlayStatus" object:nil];
-    [self.layer removeAllAnimations];
 }
 
 /*

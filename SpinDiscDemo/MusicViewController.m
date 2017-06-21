@@ -147,7 +147,7 @@ static NSInteger musicIndex = 0;
     [self.view addSubview:discView1];
     
     DiscView *discView2 = [[DiscView alloc] initWithFrame:CGRectMake(20, 140, SCREENWIDTH-40, SCREENWIDTH-40)];
-    [discView2 addObserver:self forKeyPath:@"switchRotate" options:NSKeyValueObservingOptionNew context:nil];
+
     discView2.delegate = self;
     discView2.alpha = 0;
     [self.view insertSubview:discView2 belowSubview:discView1];
@@ -207,6 +207,9 @@ static NSInteger musicIndex = 0;
 
 -(void)changeMusic
 {
+    if (_discViewArray[0].switchRotate) {
+        _discViewArray[0].switchRotate = NO;
+    }
     [_discViewArray[0] takeOutDiscAnim];
     [_discViewArray[1] takeInDiscAnim];
     [self loadingNextImageAtIndex:musicIndex];
@@ -237,7 +240,7 @@ static NSInteger musicIndex = 0;
     _titleView.titleDict = titleDic;
     
     NSString *imgUrl = _dataArray[index][@"url"];
-//使用上一张唱片背景图作为placeholder
+    //使用上一张唱片背景图作为placeholder
     UIImage *placeHolder = _baseImgView.image;
     [_baseImgView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:placeHolder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (image) {
@@ -281,7 +284,11 @@ static NSInteger musicIndex = 0;
         _consoleView.playBtn.consoleType = ConsoleBtnTypePause;
     }
     
+    [_discViewArray[0] removeObserver:self forKeyPath:@"switchRotate"];
+    [_discViewArray[1] addObserver:self forKeyPath:@"switchRotate" options:NSKeyValueObservingOptionNew context:nil];
+    
     [self.view bringSubviewToFront:_discViewArray[1]];
+    
     [_discViewArray exchangeObjectAtIndex:0 withObjectAtIndex:1];
     
     if (!_discViewArray[0].switchRotate) {
@@ -316,6 +323,11 @@ static NSInteger musicIndex = 0;
     }
     
     return index;
+}
+
+-(void)dealloc
+{
+    [_discViewArray[0] removeObserver:self forKeyPath:@"switchRotate"];
 }
 
 /*
