@@ -36,10 +36,11 @@
 
 #pragma mark - Public
 
--(void)takeOutDiscAnim
+-(void)takeOutDiscAnim;
 {
-    if ([_imgDiscView.layer animationForKey:JYAnimationTypeRotaion]) {
-        [self.jyAManager jy_removeAnimationFromLayer:_imgDiscView.layer forKey:JYAnimationTypeRotaion];
+    if ([_imgDiscView.layer animationForKey:JYAnimationTypeRotaion] && _imgDiscView.layer.speed > 0) {
+//        [self.jyAManager jy_removeAnimationFromLayer:_imgDiscView.layer forKey:JYAnimationTypeRotaion];
+        [self.jyAManager jy_pauseAnimationWithLayer:_imgDiscView.layer];
     }
 
     [self.jyAManager jy_addAnimationWithLayer:self.layer forKey:JYAnimationTypeScaleMove];
@@ -94,14 +95,14 @@
 {
     if (_switchRotate) {
         if ([_imgDiscView.layer animationForKey:JYAnimationTypeRotaion]) {
-            [self.jyAManager jy_resumeRotateWithLayer:_imgDiscView.layer];
+            [self.jyAManager jy_resumeAnimationWithLayer:_imgDiscView.layer];
         }
         else{
             [self.jyAManager jy_addAnimationWithLayer:_imgDiscView.layer forKey:JYAnimationTypeRotaion];
         }
     }
     else{
-        [self.jyAManager jy_pauseRotateWithLayer:_imgDiscView.layer];
+        [self.jyAManager jy_pauseAnimationWithLayer:_imgDiscView.layer];
     }
 }
 
@@ -132,6 +133,7 @@
 -(void)jy_animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     if (anim == [self.layer animationForKey:JYAnimationTypeScaleMove] && flag) {
+        [self.jyAManager jy_removeAnimationFromLayer:_imgDiscView.layer forKey:JYAnimationTypeRotaion];
         [self.jyAManager jy_removeAnimationFromLayer:self.layer forKey:JYAnimationTypeScaleMove];
         _imgDiscView.transform = CGAffineTransformIdentity;
         if ([_delegate respondsToSelector:@selector(changeDiscDidFinish)]) {

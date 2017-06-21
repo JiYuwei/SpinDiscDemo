@@ -41,7 +41,7 @@ static CFTimeInterval totalPauseTime = 0;
 }
 
 //暂停动画
-- (void)jy_pauseRotateWithLayer:(CALayer *)layer
+- (void)jy_pauseAnimationWithLayer:(CALayer *)layer
 {
     //申明一个暂停时间为这个层动画的当前时间
     CFTimeInterval currTimeoffset = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
@@ -50,7 +50,7 @@ static CFTimeInterval totalPauseTime = 0;
 }
 
 //恢复动画
-- (void)jy_resumeRotateWithLayer:(CALayer *)layer
+- (void)jy_resumeAnimationWithLayer:(CALayer *)layer
 {
     CFTimeInterval pausedTime = layer.timeOffset; // 当前层的暂停时间
     /** 层动画时间的初始化值 **/
@@ -68,17 +68,17 @@ static CFTimeInterval totalPauseTime = 0;
 //移除指定动画
 -(void)jy_removeAnimationFromLayer:(CALayer *)layer forKey:(NSString *)key
 {
-    if (key == JYAnimationTypeRotaion) {   //针对旋转动画 移除前将layer旋转到动画停止时的位置
-        if (layer.speed > 0) {
-            [self jy_pauseRotateWithLayer:layer];
-        }
-        CFTimeInterval beginTime = firstBeginTime;
-        CFTimeInterval endTime = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
-        CFTimeInterval pausedTime = endTime - layer.timeOffset + totalPauseTime;
-        CFTimeInterval durTime = endTime - beginTime - pausedTime;
-        CGFloat transAngle = 2.0 * M_PI * durTime / 30;
-        layer.transform = CATransform3DRotate(layer.transform, transAngle, 0, 0, 1);
-    }
+//    if (key == JYAnimationTypeRotaion) {   //针对旋转动画 移除前将layer旋转到动画停止时的位置
+//        if (layer.speed > 0) {
+//            [self jy_pauseRotateWithLayer:layer];
+//        }
+//        CFTimeInterval beginTime = firstBeginTime;
+//        CFTimeInterval endTime = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
+//        CFTimeInterval pausedTime = endTime - layer.timeOffset + totalPauseTime;
+//        CFTimeInterval durTime = endTime - beginTime - pausedTime;
+//        CGFloat transAngle = 2.0 * M_PI * durTime / 30;
+//        layer.transform = CATransform3DRotate(layer.transform, transAngle, 0, 0, 1);
+//    }
     [layer removeAnimationForKey:key];
 }
 
@@ -98,12 +98,9 @@ static CFTimeInterval totalPauseTime = 0;
     rotationAnimation.cumulative = YES;
     rotationAnimation.repeatCount = HUGE_VALF;
     rotationAnimation.delegate = self;
-    
+
     [layer addAnimation:rotationAnimation forKey:JYAnimationTypeRotaion];
-    
     layer.speed = 1.0;
-    layer.timeOffset = 0.0;
-    layer.beginTime = 0.0;
     
     totalPauseTime = 0;
     firstBeginTime = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
@@ -116,8 +113,6 @@ static CFTimeInterval totalPauseTime = 0;
 {
     CABasicAnimation *scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     scaleAnimation.duration = 0.2;
-    scaleAnimation.repeatCount = 1;
-    scaleAnimation.beginTime = 0.0;
     scaleAnimation.fromValue = [NSNumber numberWithFloat:1.0]; // 开始时的倍率
     scaleAnimation.toValue = [NSNumber numberWithFloat:0.9]; // 结束时的倍率
     scaleAnimation.removedOnCompletion = NO;
@@ -125,7 +120,6 @@ static CFTimeInterval totalPauseTime = 0;
     
     CABasicAnimation *moveAnimation = [CABasicAnimation animationWithKeyPath:@"transform.translation"];
     moveAnimation.duration = 0.4;
-    moveAnimation.repeatCount = 1;
     moveAnimation.beginTime = 0.4;
     moveAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(0, -[[UIScreen mainScreen] bounds].size.height)];
     moveAnimation.removedOnCompletion = NO;
@@ -135,7 +129,6 @@ static CFTimeInterval totalPauseTime = 0;
     fadeAnimation.fromValue = [NSNumber numberWithFloat:1.0];
     fadeAnimation.toValue = [NSNumber numberWithFloat:0.0];
     fadeAnimation.duration = 0.8;
-    fadeAnimation.repeatCount = 1;
     fadeAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     fadeAnimation.removedOnCompletion = NO;
     fadeAnimation.fillMode = kCAFillModeForwards;
@@ -148,7 +141,6 @@ static CFTimeInterval totalPauseTime = 0;
     group.delegate = self;
     
     [layer addAnimation:group forKey:JYAnimationTypeScaleMove];
-    layer.speed = 1.0;
 }
 
 //显示唱片动画
@@ -160,7 +152,6 @@ static CFTimeInterval totalPauseTime = 0;
     fadeAnimation.duration = 0.8;
     
     [layer addAnimation:fadeAnimation forKey:JYAnimationTypeFade];
-    layer.speed = 1.0;
 }
 
 

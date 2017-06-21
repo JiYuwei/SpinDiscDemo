@@ -31,8 +31,8 @@ FOUNDATION_EXPORT JYAnimationType const JYAnimationTypeFade;
 
 - (void)jy_addAnimationWithLayer:(CALayer *)layer forKey:(NSString *)key;
 
-- (void)jy_pauseRotateWithLayer:(CALayer *)layer;
-- (void)jy_resumeRotateWithLayer:(CALayer *)layer;
+- (void)jy_pauseAnimationWithLayer:(CALayer *)layer;
+- (void)jy_resumeAnimationWithLayer:(CALayer *)layer;
 
 - (void)jy_removeAnimationFromLayer:(CALayer *)layer forKey:(NSString *)key;
 - (void)jy_removeAllAnimationFromLayer:(CALayer *)layer;
